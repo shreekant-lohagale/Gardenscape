@@ -44,7 +44,7 @@ const SERVICES: ServiceProps[] = [
     {
         title: "Trimming & Pruning",
         desc: "Clean, safe, and well-shaped greenery.",
-        image: "https://images.unsplash.com/photo-1591857177580-dc82b9a4b7a8?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1592595896551-12b371d546d5?w=800&q=80&auto=format&fit=crop",
         gridClass: "col-span-1 md:col-span-2",
     }
 ];

@@ -49,7 +49,10 @@ export const MobileNav = () => {
                     exit={{ y: 100, opacity: 0 }}
                     className="fixed bottom-15 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-sm md:max-w-md"
                 >
-                    <div className="flex items-center justify-between md:justify-center md:gap-8 bg-black/80 backdrop-blur-xl border border-white/10 rounded-full px-6 py-4 shadow-2xl transition-all duration-300">
+                    <nav className="relative flex items-center justify-between md:justify-center md:gap-8 rounded-full px-6 py-4 backdrop-blur-2xl bg-white/10 border border-white/20 shadow-[0_8px_40px_rgba(0,0,0,0.25)] transition-all duration-300">
+                        {/* Glass inner highlight */}
+                        <div className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-white/30 [mask-image:linear-gradient(to_bottom,white,transparent)]" />
+
                         {navItems.map((item) => {
                             const isActive = activeHash === item.href;
                             return (
@@ -58,24 +61,27 @@ export const MobileNav = () => {
                                     href={item.href}
                                     onClick={() => setActiveHash(item.href)}
                                     className={cn(
-                                        "flex flex-col md:flex-row items-center gap-1 md:gap-2 transition-colors relative group",
-                                        isActive ? "text-green-400" : "text-white/50 hover:text-white"
+                                        "flex flex-col md:flex-row items-center gap-1 md:gap-2 transition-colors relative group px-2 py-1 rounded-full",
+                                        isActive ? "text-white" : "text-white/60 hover:text-white"
                                     )}
                                 >
-                                    <div className="relative">
+                                    {/* Glass hover halo */}
+                                    <span className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                                    <div className="relative z-10">
                                         {item.icon}
                                         {isActive && (
                                             <motion.div
                                                 layoutId="nav-dot"
-                                                className="absolute -bottom-2 md:-bottom-3 left-1/2 -translate-x-1/2 w-1 h-1 bg-green-400 rounded-full"
+                                                className="absolute -bottom-2 md:-bottom-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_12px_rgba(255,255,255,0.8)]"
                                             />
                                         )}
                                     </div>
-                                    <span className="text-[10px] md:text-sm font-medium md:block hidden">{item.name}</span>
+                                    <span className="text-[10px] md:text-sm font-medium md:block hidden relative z-10">{item.name}</span>
                                 </a>
                             );
                         })}
-                    </div>
+                    </nav>
                 </motion.div>
             )}
         </AnimatePresence>
