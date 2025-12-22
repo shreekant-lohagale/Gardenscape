@@ -15,28 +15,57 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Gardenscape | Green Havens",
-  description: "Professional gardening and landscaping services.",
+  metadataBase: new URL("https://gardenscape.demo"),
+  title: {
+    default: "Gardenscape | Green Havens",
+    template: "%s | Gardenscape"
+  },
+  description: "Transforming outdoor spaces into living sanctuaries. Expert landscaping, sustainable gardening, and modern design in Pune.",
+  keywords: ["Landscaping", "Gardening", "Pune", "Sustainable Design", "Garden Maintenance", "Outdoor Living", "Plant Nursery"],
+  authors: [{ name: "Gardenscape Team" }],
+  creator: "Gardenscape",
+  publisher: "Gardenscape",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
     title: "Gardenscape | Green Havens",
-    description: "Transforming outdoor spaces into living sanctuaries.",
+    description: "Transform your outdoor space into a lush sanctuary. Professional landscaping and maintenance services.",
     url: "https://gardenscape.demo",
     siteName: "Gardenscape",
+    locale: "en_US",
+    type: "website",
     images: [
       {
         url: "/og.png",
         width: 1200,
         height: 630,
+        alt: "Gardenscape Hero Section Showcase"
       },
     ],
-    locale: "en_US",
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Gardenscape | Green Havens",
     description: "Transforming outdoor spaces into living sanctuaries.",
+    creator: "@gardenscape",
     images: ["/og.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: '/',
   },
 };
 

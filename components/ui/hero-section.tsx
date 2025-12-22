@@ -1,31 +1,11 @@
 "use client";
 import Image from "next/image";
 
-import React, { useState, useEffect, useMemo, useRef, Suspense } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { motion, useTransform, useSpring, useMotionValue, useScroll, useReducedMotion } from "motion/react";
-import { Canvas, useLoader, useFrame } from "@react-three/fiber";
-import { Environment, Float, useTexture, Loader } from "@react-three/drei";
-import { OBJLoader } from "three-stdlib";
-
 import { Button } from "./button";
 import { PlantButton } from "./plant-button";
-import { GlassOverlay } from "./glass-overlay";
 import { ArrowRight, Phone, Star } from "lucide-react";
-import * as THREE from "three";
-
-// --- Asset Preloading ---
-const MODEL_PATHS = {
-    plant1: "/c30lumexfif4-eb_house_plant_01/eb_house_plant_01/eb_house_plant_01.obj",
-    plant2: "/cim59vrioikg-IndoorPotPlant/IndoorPotPlant/extracted/indoor plant_02.obj",
-    texture2: "/cim59vrioikg-IndoorPotPlant/IndoorPotPlant/extracted/textures/indoor plant_2_COL.jpg"
-};
-
-// Start fetching immediately (client-side only check to be safe)
-if (typeof window !== "undefined") {
-    useLoader.preload(OBJLoader, MODEL_PATHS.plant1);
-    useLoader.preload(OBJLoader, MODEL_PATHS.plant2);
-    useTexture.preload(MODEL_PATHS.texture2);
-}
 
 // --- Types ---
 export type AnimationPhase = "scatter" | "line" | "circle" | "bottom-strip";
@@ -39,62 +19,6 @@ interface FlipCardProps {
     isMobile?: boolean;
     priority?: boolean;
 }
-
-// --- Optimized 3D Plant Component ---
-const PlantModel = ({
-    objPath,
-    texturePath,
-    position,
-    scale,
-    rotation
-}: {
-    objPath: string;
-    texturePath?: string;
-    position: [number, number, number];
-    scale: number;
-    rotation?: [number, number, number];
-}) => {
-    const obj = useLoader(OBJLoader, objPath);
-    // useTexture is suspense-friendly and handles SRGB automatically
-    const texture = texturePath ? useTexture(texturePath) : null;
-
-    const scene = useMemo(() => {
-        const clone = obj.clone();
-        clone.traverse((child) => {
-            if ((child as THREE.Mesh).isMesh) {
-                const mesh = child as THREE.Mesh;
-                mesh.castShadow = true;
-                mesh.receiveShadow = true;
-
-                if (texture) {
-                    texture.flipY = false;
-                    mesh.material = new THREE.MeshStandardMaterial({
-                        map: texture,
-                        roughness: 0.8,
-                        metalness: 0,
-                    });
-                } else {
-                    // Procedural fallback (Restored recommendation)
-                    const matName = (mesh.material as THREE.Material).name.toLowerCase();
-                    const isLeaf = matName.includes("leaf") || matName.includes("leaves") || matName.includes("blinn");
-
-                    mesh.material = new THREE.MeshStandardMaterial({
-                        color: isLeaf ? "#558b2f" : "#a05a41", // Green for leaves, Terracotta for pots
-                        roughness: isLeaf ? 0.6 : 0.9,
-                        metalness: isLeaf ? 0.1 : 0,
-                    });
-                }
-            }
-        });
-        return clone;
-    }, [obj, texture]);
-
-    return (
-        <group position={position} scale={scale} rotation={rotation ? new THREE.Euler(...rotation) : undefined}>
-            <primitive object={scene} />
-        </group>
-    );
-};
 
 // --- FlipCard Component ---
 const IMG_WIDTH = 100;
@@ -206,6 +130,40 @@ const IMAGES = [
 
 // Helper for linear interpolation
 const lerp = (start: number, end: number, t: number) => start * (1 - t) + end * t;
+
+// --- Hero Background Video Component ---
+const HeroBackgroundVideo = () => {
+    return (
+        <div className="absolute inset-0 z-0 overflow-hidden">
+            {/* Desktop video */}
+            <video
+                className="hidden md:block absolute inset-0 w-full h-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+            >
+                <source src="/video/desktop.mp4" type="video/mp4" />
+            </video>
+
+            {/* Mobile video */}
+            <video
+                className="block md:hidden absolute inset-0 w-full h-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+            >
+                <source src="/video/mobile.mp4" type="video/mp4" />
+            </video>
+
+            {/* Optional overlay for contrast */}
+            <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px]" />
+        </div>
+    );
+};
 
 export default function IntroAnimation() {
     const [introPhase, setIntroPhase] = useState<AnimationPhase>("scatter");
@@ -320,141 +278,14 @@ export default function IntroAnimation() {
     const contentY = useTransform(scrollYProgress, [0.7, 0.9], [30, 0]);
 
     return (
-        <div ref={containerRef} className="relative w-full h-[300vh] bg-[#f2f0e9]">
+        <div ref={containerRef} className="relative w-full h-[300vh] bg-black">
             {/* Sticky Container */}
             <section
                 aria-label="Gardenscape introduction"
                 className="sticky top-0 h-screen w-full flex flex-col items-center justify-center perspective-1000 overflow-hidden"
             >
-                {/* --- 3D Background/Overlay (Styled Shelf) --- */}
-                <div className="absolute inset-0 z-0 pointer-events-none">
-                    <Canvas
-                        camera={{ position: [0, 1, 9], fov: 40 }}
-                        shadows
-                        // Performance: Dynamic resolution and demand rendering when static
-                        performance={{ min: 0.5 }}
-                        dpr={isMobile ? 1 : [1, 1.5]}
-                        frameloop={morphValue > 0.95 ? "demand" : "always"}
-                        gl={{ antialias: true, powerPreference: "high-performance" }}
-                    >
-                        <Suspense fallback={null}>
-                            <ambientLight intensity={1} />
-                            <spotLight position={[10, 20, 10]} angle={0.15} penumbra={1} intensity={2} castShadow />
-                            <Environment preset="apartment" />
-
-                            {/* 1. Left Far - Concrete Pot */}
-                            <Float enabled={!prefersReducedMotion && !isMobile && morphValue < 0.95} speed={2} rotationIntensity={0.5} floatIntensity={1} floatingRange={[-0.2, 0.2]}>
-                                <PlantModel
-                                    objPath={MODEL_PATHS.plant1}
-                                    position={[-6.5, -3.5, 0]}
-                                    scale={0.32}
-                                    rotation={[0, 0.5, 0]}
-                                />
-                            </Float>
-
-                            {/* 2. Left Mid - White Ceramic - HIDDEN ON MOBILE */}
-                            {!isMobile && (
-                                <Float enabled={!prefersReducedMotion && morphValue < 0.95} speed={2.5} rotationIntensity={0.4} floatIntensity={0.8} floatingRange={[-0.3, 0.3]}>
-                                    <PlantModel
-                                        objPath={MODEL_PATHS.plant2}
-                                        texturePath={MODEL_PATHS.texture2}
-                                        position={[-2.5, -4, 1.5]}
-                                        scale={0.7}
-                                        rotation={[0, -0.3, 0]}
-                                    />
-                                </Float>
-                            )}
-
-                            {/* 3. Center - Black Matte */}
-                            <Float enabled={!prefersReducedMotion && !isMobile && morphValue < 0.95} speed={1.8} rotationIntensity={0.6} floatIntensity={1.2} floatingRange={[-0.4, 0.4]}>
-                                <PlantModel
-                                    objPath={MODEL_PATHS.plant1}
-                                    position={[1.5, -3.2, -0.5]}
-                                    scale={0.35}
-                                    rotation={[0, 2, 0]}
-                                />
-                            </Float>
-
-                            {/* 4. Right Mid - Terracotta - HIDDEN ON MOBILE */}
-                            {!isMobile && (
-                                <Float enabled={!prefersReducedMotion && morphValue < 0.95} speed={2.2} rotationIntensity={0.5} floatIntensity={0.9} floatingRange={[-0.3, 0.3]}>
-                                    <PlantModel
-                                        objPath={MODEL_PATHS.plant2}
-                                        texturePath={MODEL_PATHS.texture2}
-                                        position={[5, -3.8, 1]}
-                                        scale={0.6}
-                                        rotation={[0, 0.5, 0]}
-                                    />
-                                </Float>
-                            )}
-
-                            {/* 5. Right Far - Sage/Green Pot */}
-                            <Float enabled={!prefersReducedMotion && !isMobile && morphValue < 0.95} speed={3} rotationIntensity={0.7} floatIntensity={1.1} floatingRange={[-0.4, 0.4]}>
-                                <PlantModel
-                                    objPath={MODEL_PATHS.plant1}
-                                    position={[8, -3, -1]}
-                                    scale={0.28}
-                                    rotation={[0, -1, 0]}
-                                />
-                            </Float>
-
-                            {/* --- Additional Models (6-10) for Desktop Depth --- */}
-                            {!isMobile && (
-                                <>
-                                    <Float enabled={!prefersReducedMotion && morphValue < 0.95} speed={2.2} rotationIntensity={0.6} floatIntensity={1.5} floatingRange={[-0.5, 0.5]}>
-                                        <PlantModel
-                                            objPath={MODEL_PATHS.plant2}
-                                            texturePath={MODEL_PATHS.texture2}
-                                            position={[-7, 2, -2]}
-                                            scale={0.5}
-                                            rotation={[0.5, 1, 0]}
-                                        />
-                                    </Float>
-                                    <Float enabled={!prefersReducedMotion && morphValue < 0.95} speed={2.8} rotationIntensity={0.4} floatIntensity={1.2} floatingRange={[-0.3, 0.3]}>
-                                        <PlantModel
-                                            objPath={MODEL_PATHS.plant1}
-                                            position={[7, 3, -3]}
-                                            scale={0.32}
-                                            rotation={[0.2, -0.5, 0.2]}
-                                        />
-                                    </Float>
-                                    <Float enabled={!prefersReducedMotion && morphValue < 0.95} speed={1.5} rotationIntensity={0.3} floatIntensity={0.8} floatingRange={[-0.6, 0.6]}>
-                                        <PlantModel
-                                            objPath={MODEL_PATHS.plant2}
-                                            texturePath={MODEL_PATHS.texture2}
-                                            position={[-2, 1, -5]}
-                                            scale={0.6}
-                                            rotation={[-0.1, 2, 0]}
-                                        />
-                                    </Float>
-                                    <Float enabled={!prefersReducedMotion && morphValue < 0.95} speed={3.5} rotationIntensity={0.8} floatIntensity={1.4} floatingRange={[-0.2, 0.2]}>
-                                        <PlantModel
-                                            objPath={MODEL_PATHS.plant1}
-                                            position={[-5, -1, 1]}
-                                            scale={0.24}
-                                            rotation={[0.3, 0.3, 0.1]}
-                                        />
-                                    </Float>
-                                    <Float enabled={!prefersReducedMotion && morphValue < 0.95} speed={2.0} rotationIntensity={0.5} floatIntensity={1.0} floatingRange={[-0.3, 0.3]}>
-                                        <PlantModel
-                                            objPath={MODEL_PATHS.plant2}
-                                            texturePath={MODEL_PATHS.texture2}
-                                            position={[9, 0, -4]}
-                                            scale={0.55}
-                                            rotation={[0.1, -1.5, -0.1]}
-                                        />
-                                    </Float>
-                                </>
-                            )}
-                        </Suspense>
-                    </Canvas>
-                </div>
-
-                {/* GLASS OVERLAY (Only visible after scroll start) */}
-                {!prefersReducedMotion && morphValue > 0.05 && (
-                    <GlassOverlay opacity={glassOpacity} />
-                )}
-
+                {/* Background Video */}
+                <HeroBackgroundVideo />
                 {/* Intro Text (Fades out) */}
                 <motion.div
                     style={{ opacity: titleOpacity, y: titleY }}
@@ -580,9 +411,6 @@ export default function IntroAnimation() {
                     })}
                 </div>
             </section>
-
-            {/* Visual Loader/Progress Bar for 3D Assets */}
-            <Loader />
         </div>
     );
 }
