@@ -38,13 +38,13 @@ const SERVICES: ServiceProps[] = [
     {
         title: "Lawn Renovation",
         desc: "Revive dull lawns with fresh, even green growth.",
-        image: "https://images.unsplash.com/photo-1533460004989-cef01064af7c?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1558904541-efa843a96f01?q=80&w=800&auto=format&fit=crop",
         gridClass: "col-span-1 md:col-span-2 row-span-1 md:row-span-2",
     },
     {
         title: "Trimming & Pruning",
         desc: "Clean, safe, and well-shaped greenery.",
-        image: "https://images.unsplash.com/photo-1592150621344-828ec9639a0c?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1591857177580-dc82b9a4b7a8?q=80&w=800&auto=format&fit=crop",
         gridClass: "col-span-1 md:col-span-2",
     }
 ];
@@ -53,7 +53,7 @@ const ADDITIONAL_SERVICES: ServiceProps[] = [
     {
         title: "Hardscaping",
         desc: "Patios, walkways, and stone features.",
-        image: "https://images.unsplash.com/photo-1590059349881-22446700021b?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1628151015968-3a4429e9ef04?q=80&w=800&auto=format&fit=crop",
     },
     {
         title: "Seasonal Color",
@@ -64,7 +64,7 @@ const ADDITIONAL_SERVICES: ServiceProps[] = [
     {
         title: "Commercial Care",
         desc: "Professional groundskeeping for businesses.",
-        image: "https://images.unsplash.com/photo-1542601906990-b4d3fb7d5c73?q=80&w=800&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1459156212016-c812468e2115?q=80&w=800&auto=format&fit=crop",
     }
 ];
 

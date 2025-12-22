@@ -47,7 +47,7 @@ export const MobileNav = () => {
                     initial={{ y: 100, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 100, opacity: 0 }}
-                    className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-sm md:max-w-md"
+                    className="fixed bottom-15 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-sm md:max-w-md"
                 >
                     <div className="flex items-center justify-between md:justify-center md:gap-8 bg-black/80 backdrop-blur-xl border border-white/10 rounded-full px-6 py-4 shadow-2xl transition-all duration-300">
                         {navItems.map((item) => {

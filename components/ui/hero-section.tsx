@@ -109,7 +109,7 @@ const IMAGES = [
     "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=300&q=80", // Garden care
     "https://images.unsplash.com/photo-1592595896551-12b371d546d5?w=300&q=80", // Planter
     "https://images.unsplash.com/photo-1557429287-b2e26467fc2b?w=300&q=80", // Greenery
-    "https://images.unsplash.com/photo-1416879895691-8043690d2924?w=300&q=80", // Grass texture
+    "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=300&q=80", // Grass texture replacement
     "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=300&q=80", // Flower close up
     "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=300&q=80", // Garden wide
     "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=300&q=80", // Indoor plant
@@ -122,8 +122,8 @@ const IMAGES = [
     "https://images.unsplash.com/photo-1558904541-efa843a96f01?w=300&q=80", // Bloom
     "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=300&q=80", // Flower
     "https://images.unsplash.com/photo-1592595896551-12b371d546d5?w=300&q=80", // Planter
-    "https://images.unsplash.com/photo-1557429287-b2e26467fc2b?w=300&q=80", // Greenery
-    "https://images.unsplash.com/photo-1416879895691-8043690d2924?w=300&q=80", // Grass
+    "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=300&q=80", // Greenery
+    "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=300&q=80", // Grass
     "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=300&q=80", // Garden
     "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=300&q=80", // Nature
 ];

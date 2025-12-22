@@ -10,7 +10,7 @@ const projects = [
     {
         title: "Villa Landscape Redesign",
         category: "Complete Transformation",
-        image: "https://images.unsplash.com/photo-1598902108117-030495905968?w=800&auto=format&fit=crop&q=60",
+        image: "https://images.unsplash.com/photo-1558904541-efa843a96f01?w=800&auto=format&fit=crop&q=60",
         stats: "2,500 sq.ft | 3 Weeks"
     },
     {
@@ -22,13 +22,13 @@ const projects = [
     {
         title: "Japanese Zen Garden",
         category: "Styling & Maintenance",
-        image: "https://images.unsplash.com/photo-1622383563227-0440113a8620?w=800&auto=format&fit=crop&q=60",
+        image: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&auto=format&fit=crop&q=60",
         stats: "Stone Work | Minimalist"
     },
     {
         title: "Vertical Green Wall",
         category: "Commercial Install",
-        image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&auto=format&fit=crop&q=60",
+        image: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&auto=format&fit=crop&q=60",
         stats: "Office Lobby | Auto-Irrigation"
     }
 ]
