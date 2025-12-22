@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://gardenscape.demo"),
+  metadataBase: new URL("https://gardenscape-psi.vercel.app"),
   title: {
     default: "Gardenscape | Green Havens",
     template: "%s | Gardenscape"
@@ -32,18 +32,18 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: "Gardenscape | Green Havens",
-    description: "Transform your outdoor space into a lush sanctuary. Professional landscaping and maintenance services.",
-    url: "https://gardenscape.demo",
-    siteName: "Gardenscape",
-    locale: "en_US",
     type: "website",
+    locale: "en_IN",
+    url: "https://gardenscape-psi.vercel.app",
+    title: "Gardenscape | Green Havens",
+    description: "Transforming outdoor spaces into living sanctuaries. Expert landscaping, sustainable gardening, and modern design in Pune.",
+    siteName: "Gardenscape",
     images: [
       {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Gardenscape Hero Section Showcase"
+        alt: "Gardenscape - Premium Landscaping",
       },
     ],
   },
