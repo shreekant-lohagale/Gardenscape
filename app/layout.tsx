@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     siteName: "Gardenscape",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1598555819385-a7455d31168f?w=1200",
+        url: "/og.png",
         width: 1200,
         height: 630,
       },
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Gardenscape | Green Havens",
     description: "Transforming outdoor spaces into living sanctuaries.",
-    images: ["https://images.unsplash.com/photo-1598555819385-a7455d31168f?w=1200"],
+    images: ["/og.png"],
   },
 };
 
