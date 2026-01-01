@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SmoothScroll } from "@/components/smooth-scroll";
-import { Preloader } from "@/components/ui/preloader";
-import { CustomCursor } from "@/components/ui/custom-cursor";
+import { SmoothScroll } from "@/components/animations/smooth-scroll";
+import { Preloader } from "@/components/animations/preloader";
+import { CustomCursor } from "@/components/animations/custom-cursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

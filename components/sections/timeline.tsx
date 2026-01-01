@@ -56,7 +56,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
                             <div className="relative w-full h-full bg-neutral-900 border border-neutral-800 rounded-3xl overflow-hidden p-8 md:p-14 flex flex-col justify-end group shadow-2xl">
                                 {/* 5. Background Text Accessibility (pointer-events-none) */}
                                 <div className="absolute -top-10 -right-10 leading-none pointer-events-none select-none">
-                                    <span className="text-[12rem] md:text-[20rem] font-bold text-neutral-800/30 transition-colors group-hover:text-green-900/20">
+                                    <span className="text-[12rem] md:text-[20rem] font-bold text-neutral-600/20 transition-colors group-hover:text-green-500/20">
                                         {item.title}
                                     </span>
                                 </div>

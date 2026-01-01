@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform, useReducedMotion, MotionValue } from "
 import { cn } from "@/lib/utils"
 import { PlantButton } from "@/components/ui/plant-button"
 import Image from "next/image"
-import { PlantScene } from "./plant-scene"
+import { PlantScene } from "@/components/animations/plant-scene"
 
 // --- Interfaces ---
 

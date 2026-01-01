@@ -1,10 +1,10 @@
 
-import HeroSection from "@/components/ui/hero-section";
-import { ServicesSection } from "@/components/ui/services-section";
-import { GallerySection } from "@/components/ui/gallery-section";
+import HeroSection from "@/components/sections/hero-section";
+import { ServicesSection } from "@/components/sections/services-section";
+import { GallerySection } from "@/components/sections/gallery-section";
 
-import { Timeline } from "@/components/ui/timeline";
-import ContactFooter from "@/components/ui/contact-footer";
+import { Timeline } from "@/components/sections/timeline";
+import ContactFooter from "@/components/sections/contact-footer";
 import { MobileNav } from "@/components/ui/mobile-nav";
 
 // ... (existing data)

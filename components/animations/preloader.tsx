@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { OrbitLoader } from "./orbit-loader";
+import { OrbitLoader } from "@/components/ui/orbit-loader";
 
 export const Preloader = () => {
     const [isLoading, setIsLoading] = useState(true);

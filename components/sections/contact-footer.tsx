@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { cn } from "@/lib/utils";
 import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, ArrowUpRight } from "lucide-react";
-import { PlantButton } from "./plant-button";
+import { PlantButton } from "@/components/ui/plant-button";
 
 // Refactored TextHoverEffect for Light Theme
 export const TextHoverEffect = ({ text }: { text: string }) => {

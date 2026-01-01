@@ -3,8 +3,8 @@ import Image from "next/image";
 
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { motion, useTransform, useSpring, useMotionValue, useScroll, useReducedMotion } from "motion/react";
-import { Button } from "./button";
-import { PlantButton } from "./plant-button";
+import { Button } from "@/components/ui/button";
+import { PlantButton } from "@/components/ui/plant-button";
 import { ArrowRight, Phone, Star } from "lucide-react";
 
 // --- Types ---
@@ -303,11 +303,15 @@ export default function IntroAnimation() {
                             Professional gardening & landscaping services for your home and office.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 pointer-events-auto w-full sm:w-auto px-4 sm:px-0">
-                            <PlantButton text="Book a Free Visit" className="w-full sm:w-auto shadow-xl hover:scale-105 transition-transform duration-300" />
-                            <Button variant="outline" className="border-green-800 text-green-900 hover:bg-green-50 rounded-full px-8 py-6 text-base font-semibold border-2 hover:scale-105 transition-transform duration-300 w-full sm:w-auto">
-                                <Phone className="w-4 h-4 mr-2" />
-                                Call Now
-                            </Button>
+                            <a href="#contact" className="w-full sm:w-auto">
+                                <PlantButton text="Book a Free Visit" className="shadow-xl hover:scale-105 transition-transform duration-300" />
+                            </a>
+                            <a href="tel:+918459197397" className="w-full sm:w-auto">
+                                <Button variant="outline" className="border-green-800 text-green-900 hover:bg-green-50 rounded-full px-8 py-6 text-base font-semibold border-2 hover:scale-105 transition-transform duration-300">
+                                    <Phone className="w-4 h-4 mr-2" />
+                                    Call Now
+                                </Button>
+                            </a>
                         </div>
                         <div className="mt-8 flex items-center gap-2 opacity-80 animate-fade-in">
                             <div className="flex -space-x-1">
@@ -320,6 +324,28 @@ export default function IntroAnimation() {
                             </p>
                         </div>
                     </div>
+                </motion.div>
+
+                {/* Scroll Down Indicator */}
+                <motion.div
+                    style={{ opacity: titleOpacity }}
+                    className="absolute bottom-12 z-20 flex flex-col items-center gap-2 pointer-events-none"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 2, duration: 1 }}
+                >
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">Scroll Down</span>
+                    <motion.div
+                        animate={{ y: [0, 6, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                        className="w-5 h-9 rounded-full border-2 border-white/30 flex justify-center p-1 backdrop-blur-sm"
+                    >
+                        <motion.div
+                            animate={{ y: [0, 8, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                            className="w-1 h-1.5 rounded-full bg-white"
+                        />
+                    </motion.div>
                 </motion.div>
 
                 {/* Arc Active Content (Fades in) */}
