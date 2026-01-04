@@ -153,9 +153,19 @@ export const ServicesSection = () => {
                     </p>
                 </div>
 
-                {/* Animated Bento Grid */}
-                <div ref={scrollRef} className="relative h-[120vh] min-h-[600px] w-full">
-                    <div className="sticky top-24 grid grid-cols-1 gap-4 md:grid-cols-8 md:grid-rows-3">
+                {/* Animated Bento Grid - Mobile: Horizontal Scroll, Desktop: Animated Grid */}
+                <div ref={scrollRef} className="relative md:h-[120vh] md:min-h-[600px] w-full">
+                    {/* Mobile: Horizontal Snap Scroll */}
+                    <div className="md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-6 -mx-4 px-4 scrollbar-hide">
+                        {SERVICES.map((service, i) => (
+                            <div key={service.title} className="snap-center shrink-0 w-[85vw] h-[400px]">
+                                <ServiceCard {...service} />
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Desktop: Sticky Animated Grid */}
+                    <div className="hidden md:grid sticky top-24 grid-cols-8 grid-rows-3 gap-4">
                         {SERVICES.map((service, i) => (
                             <BentoCell
                                 key={service.title}
@@ -169,13 +179,23 @@ export const ServicesSection = () => {
                     </div>
                 </div>
 
-                {/* Static Grid (Footer Services) */}
-                <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-                    {ADDITIONAL_SERVICES.map((service) => (
-                        <div key={service.title} className="h-[200px]">
-                            <ServiceCard {...service} />
-                        </div>
-                    ))}
+                {/* Static Grid (Footer Services) - Mobile: Scroll, Desktop: Grid */}
+                <div className="mt-8 md:mt-12">
+                    <div className="md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-6 -mx-4 px-4 scrollbar-hide">
+                        {ADDITIONAL_SERVICES.map((service) => (
+                            <div key={service.title} className="snap-center shrink-0 w-[70vw] h-[200px]">
+                                <ServiceCard {...service} />
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="hidden md:grid grid-cols-3 gap-6">
+                        {ADDITIONAL_SERVICES.map((service) => (
+                            <div key={service.title} className="h-[200px]">
+                                <ServiceCard {...service} />
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 {/* CTA Section */}

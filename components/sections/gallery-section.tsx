@@ -147,24 +147,51 @@ export function GallerySection() {
                     </p>
                 </div>
 
-                {/* 3D Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 perspective-2000">
-                    {projects.map((project, index) => (
-                        <GalleryCard key={index} project={project} index={index} />
-                    ))}
+                {/* 3D Grid - Mobile: Carousel, Desktop: Grid */}
+                <div className="relative">
+                    {/* Mobile Carousel */}
+                    <div className="md:hidden flex gap-6 overflow-x-auto snap-x snap-mandatory pb-10 -mx-4 px-4 scrollbar-hide">
+                        {projects.map((project, index) => (
+                            <div key={index} className="snap-center shrink-0 w-[85vw]">
+                                <GalleryCard project={project} index={index} />
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Desktop Grid */}
+                    <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-8 perspective-2000">
+                        {projects.map((project, index) => (
+                            <GalleryCard key={index} project={project} index={index} />
+                        ))}
+                    </div>
                 </div>
 
-                {/* Trust Footer */}
-                <div className="mt-20 text-center border-t border-green-900/5 pt-12">
-                    <p className="text-xs font-bold text-green-900/30 uppercase tracking-[0.2em] mb-6">
+                {/* Trust Footer with Infinite Marquee */}
+                <div className="mt-20 border-t border-green-900/5 pt-12 overflow-hidden">
+                    <p className="text-center text-sm md:text-base font-bold text-green-900/40 uppercase tracking-[0.3em] mb-8">
                         Trusted by top communities
                     </p>
-                    <div className="flex justify-center flex-wrap gap-x-12 gap-y-6 opacity-40 hover:opacity-100 transition-opacity duration-500">
-                        {/* Simple text logos for trust signals with specific font styles */}
-                        <span className="text-xl font-serif font-bold text-green-950">Emaar Hills</span>
-                        <span className="text-xl font-sans font-light tracking-widest text-green-950 uppercase border-b border-green-950">DLF Camellias</span>
-                        <span className="text-xl font-mono font-bold text-green-950 tracking-tighter">Lodha Park</span>
-                        <span className="text-xl font-serif italic text-green-950">Prestige Golf</span>
+
+                    <div className="relative flex overflow-hidden w-full mask-gradient-x">
+                        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white z-10"></div>
+                        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white z-10"></div>
+
+                        <motion.div
+                            className="flex gap-16 md:gap-32 min-w-max pr-16 md:pr-32"
+                            animate={{ x: ["0%", "-50%"] }}
+                            transition={{ ease: "linear", duration: 20, repeat: Infinity }}
+                        >
+                            {[...Array(2)].map((_, i) => (
+                                <React.Fragment key={i}>
+                                    <span className="text-2xl md:text-3xl font-serif font-bold text-green-950/40 whitespace-nowrap">Emaar Hills</span>
+                                    <span className="text-2xl md:text-3xl font-sans font-light tracking-widest text-green-950/40 uppercase border-b border-green-950/20 whitespace-nowrap">DLF Camellias</span>
+                                    <span className="text-2xl md:text-3xl font-mono font-bold text-green-950/40 tracking-tighter whitespace-nowrap">Lodha Park</span>
+                                    <span className="text-2xl md:text-3xl font-serif italic text-green-950/40 whitespace-nowrap">Prestige Golf</span>
+                                    <span className="text-2xl md:text-3xl font-sans font-extrabold text-green-950/40 tracking-tight whitespace-nowrap">Hiranandani</span>
+                                    <span className="text-2xl md:text-3xl font-serif font-medium text-green-950/40 uppercase tracking-widest whitespace-nowrap">Oberoi Realty</span>
+                                </React.Fragment>
+                            ))}
+                        </motion.div>
                     </div>
                 </div>
 

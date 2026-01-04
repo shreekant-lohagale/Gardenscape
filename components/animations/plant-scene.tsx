@@ -92,12 +92,17 @@ function useIsMobile(breakpoint = 768) {
 export const PlantScene = ({ className }: { className?: string }) => {
     const isMobile = useIsMobile();
 
+    // PERFORMANCE: Completely disable 3D Canvas on mobile to reduce load
+    if (isMobile) {
+        return null;
+    }
+
     return (
         <div className={className}>
             <Canvas
                 camera={{ position: [0, 1, 6], fov: 45 }}
                 shadows
-                dpr={isMobile ? 1 : [1, 1.5]}
+                dpr={[1, 1.5]}
                 gl={{ antialias: true, alpha: true }}
             >
                 <ambientLight intensity={1.5} />
@@ -105,42 +110,25 @@ export const PlantScene = ({ className }: { className?: string }) => {
                 <Environment preset="city" />
 
                 <Suspense fallback={null}>
-                    {/* ✅ MOBILE → ONLY PLANT 2 */}
-                    {isMobile && (
-                        <Float speed={2} rotationIntensity={0.3} floatIntensity={0.6}>
-                            <PlantModel
-                                objPath={MODEL_PATHS.plant2}
-                                texturePath={MODEL_PATHS.texture2}
-                                position={[0, -1.2, 0]}
-                                scale={0.6}
-                                rotation={[0, -0.3, 0]}
-                            />
-                        </Float>
-                    )}
-
                     {/* ✅ DESKTOP → ALL PLANTS */}
-                    {!isMobile && (
-                        <>
-                            <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
-                                <PlantModel
-                                    objPath={MODEL_PATHS.plant1}
-                                    position={[-1.5, -1, 0]}
-                                    scale={0.3}
-                                    rotation={[0, 0.5, 0]}
-                                />
-                            </Float>
+                    <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
+                        <PlantModel
+                            objPath={MODEL_PATHS.plant1}
+                            position={[-1.5, -1, 0]}
+                            scale={0.3}
+                            rotation={[0, 0.5, 0]}
+                        />
+                    </Float>
 
-                            <Float speed={2.5} rotationIntensity={0.4} floatIntensity={0.8}>
-                                <PlantModel
-                                    objPath={MODEL_PATHS.plant2}
-                                    texturePath={MODEL_PATHS.texture2}
-                                    position={[1.5, -0.5, 0]}
-                                    scale={0.5}
-                                    rotation={[0, -0.3, 0]}
-                                />
-                            </Float>
-                        </>
-                    )}
+                    <Float speed={2.5} rotationIntensity={0.4} floatIntensity={0.8}>
+                        <PlantModel
+                            objPath={MODEL_PATHS.plant2}
+                            texturePath={MODEL_PATHS.texture2}
+                            position={[1.5, -0.5, 0]}
+                            scale={0.5}
+                            rotation={[0, -0.3, 0]}
+                        />
+                    </Float>
                 </Suspense>
             </Canvas>
         </div>
